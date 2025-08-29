@@ -1,0 +1,5 @@
+name = "Text-AST"
+badges = ["github-actions/testing.yml"]
+module_maker="ModuleBuildTiny"
+static_install = "auto"
+
