@@ -46,6 +46,7 @@ jobs:
         run: |
           cpm install -Llocal Carton::Snapshot
           cpm install -Llocal --show-build-log-on-failure
+          carton install
       - name: Run to tests
         run: |
           carton exec prove -lvr t/
