@@ -64,25 +64,32 @@ sub new {
     }
   }
 
-  if ( ( my @unsupported = grep { $_ ne 'line' && $_ ne 'column' } sort keys %{$args} ) != 0 ) {
-    croak "The arguments has unsupported property keys: " . join q{, }, @unsupported;
+  my $line = delete $args->{'line'};
+  if ( !defined $line ) {
+    croak "The 'line' is missing. this argument always required.";
   }
 
-  my $this = {};
-  for my $prop (qw/line column/) {
-    if ( defined( my $value = delete $args->{$prop} ) ) {
-      if ( $value =~ m{[^0-9]} || $value eq q{} ) {
-        croak "The argument '${prop}' is not 0 or larger number";
-      }
-
-      $this->{$prop} = 0+ $value;
-      next;
-    }
-
-    croak "The '${prop}' is missing. this argument always required.";
+  if ( $line eq q{} || $line =~ m{[^0-9]} || $line < 0 ) {
+    croak "The argument 'line' is not 0 or larger number";
   }
 
-  return bless $this, $class;
+  my $column = delete $args->{'column'};
+  if ( !defined $column ) {
+    croak "The 'column' is missing. this argument always required.";
+  }
+
+  if ( $column eq q{} || $column =~ m{[^0-9]} || $column < 0 ) {
+    croak "The argument 'column' is not 0 or larger number";
+  }
+
+  if ( ( my @unsupported = sort keys %{$args} ) != 0 ) {
+    croak "The arguments has unsupported property keys: ", join q{, }, @unsupported;
+  }
+
+  return bless {
+    line   => 0+ $line,
+    column => 0+ $column,
+  }, $class;
 }
 
 =head1 PROPERTIES
