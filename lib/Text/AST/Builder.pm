@@ -36,7 +36,7 @@ Make to a L<Text::AST::Point> object.
 
     # DSL
     my $point = point $x, $y;
-    
+
     # Same as
     my $point = Text::AST::Point->new(
       column => $x,
@@ -45,7 +45,7 @@ Make to a L<Text::AST::Point> object.
 
 =cut
 
-sub point : prototype($$) {
+sub point ($$) {
   my $x = shift;
   my $y = shift;
 
